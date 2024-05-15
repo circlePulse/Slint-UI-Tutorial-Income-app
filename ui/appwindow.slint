@@ -1,7 +1,12 @@
 import { Button, VerticalBox, LineEdit } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
-default-font-family: "Amazon Ember Display";
+    property <string> results: "";
+    callback divide-income(string);
+
+    default-font-family: "Amazon Ember Display";
+    title: "Income Calculator";
+
     GridLayout {
         padding: 50px;
         spacing: 25px;
@@ -15,15 +20,36 @@ default-font-family: "Amazon Ember Display";
         }
 
         Row {
-            LineEdit {
+            income := LineEdit {
+                horizontal-alignment: center;
                 font-size: 14px;
                 placeholder-text: "Enter your number";
+                height: 30px;
             }
         }
 
         Row {
             Button {
                 text: "Calculate";
+                primary: true;
+                height: 30px;
+                clicked => {
+                    divide-income(income.text);
+                }
+            }
+        }
+        
+        Row {
+            VerticalBox {
+                Rectangle {
+                    height: 100px;
+                    Text {
+                        text: root.results;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                        font-size: 16px;
+                    }
+                }
             }
         }
     }
